@@ -5,33 +5,33 @@ const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
 
-const { db } = require('../database/models/index.js');
+const { db } = require('../database/models/index.js')
 // console.log(db)
 
 class Bot {
     constructor(token) {
-        this.bot = new Telegraf(token);
-        this.database = db;
+        this.bot = new Telegraf(token)
+        this.database = db
         this.bot.catch(error => {
-            console.error(`Bot error: ${error}`);
-        });
+            console.error(`Bot error: ${error}`)
+        })
     }
     async init() {
+      this.signIn = new Scene('signIn')
+      this.bot.command('hello', (ctx) => ctx.reply('hello back'))
       this.bot.command('all', (ctx) => {
-        console.log('db is : '+ this.database)
+        // console.log('db is : '+ this.database)
         this.database['User'].findAll()
         .then((users) => {
-          // JSON.stringify(users, null, 4)
-          ctx.reply('ehhh')
+          ctx.reply(JSON.stringify(users, null, 4))
         })
       })
-      this.bot.command('register', (ctx) => ctx.scene.enter('register'))
-      const register = new Scene('register')
-      register.enter((ctx) => {
+      this.bot.command('register', (ctx) => ctx.scene.enter('signIn'))
+      this.signIn.enter((ctx) => {
         ctx.reply('hi please enter your age: ')
         var tempUser = {}
       })
-      register.leave((ctx) => {
+      this.signIn.leave((ctx) => {
         this.database['User'].create({
             name: tempUser['name'],
             chatId: tempUser['chatId'],
@@ -41,7 +41,7 @@ class Bot {
         })
         ctx.reply('thank you bye')
       })
-      register.on('text', (ctx) => {
+      this.signIn.on('text', (ctx) => {
           if (!tempUser['age']){
             tempUser['age'] = ctx['text']
             tempUser['chatId'] = ctx['chat'].id
@@ -54,17 +54,17 @@ class Bot {
             leave()
           }
       })
-      const stage = new Stage()
-      stage.command('cancel', leave())
-      stage.register(register)
-      this.bot.use(session())
-      this.bot.use(Telegraf.log())
-      this.bot.use(stage.middleware())
     }
 
     start() {
-        this.bot.launch();
+        const stage = new Stage()
+        this.bot.use(session())
+        this.bot.use(Telegraf.log())
+        this.bot.use(stage.middleware())
+        stage.command('cancel', leave())
+        stage.register(this.signIn)
+        this.bot.launch()
     }
 }
 
-exports.Bot = Bot;
+exports.Bot = Bot
