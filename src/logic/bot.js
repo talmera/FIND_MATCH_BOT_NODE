@@ -13,7 +13,7 @@ class Bot {
         this.bot = new Telegraf(token)
         this.database = db
         this.bot.catch(error => {
-            console.error(`Bot error: ${error}`)
+            console.error(`Bot error: ${error.stack}`)
         })
     }
     async init() {
@@ -26,7 +26,7 @@ class Bot {
           ctx.reply(JSON.stringify(users, null, 4))
         })
       })
-      this.bot.command('register', (ctx) => ctx.scene.enter('signIn'))
+      
       this.signIn.enter((ctx) => {
         ctx.reply('hi please enter your age: ')
         var tempUser = {}
@@ -63,6 +63,7 @@ class Bot {
         this.bot.use(stage.middleware())
         stage.command('cancel', leave())
         stage.register(this.signIn)
+        this.bot.command('register', (ctx) => ctx.scene.enter('signIn'))
         this.bot.launch()
     }
 }
