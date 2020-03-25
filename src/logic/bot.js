@@ -15,9 +15,11 @@ class Bot {
         this.bot.catch(error => {
             console.error(`Bot error: ${error.stack}`)
         })
+        this.tempUser = {}
     }
     async init() {
       this.signIn = new Scene('signIn')
+      this.left = new Scene('left')
       this.bot.command('hello', (ctx) => ctx.reply('hello back'))
       this.bot.command('all', (ctx) => {
         // console.log('db is : '+ this.database)
@@ -26,34 +28,40 @@ class Bot {
           ctx.reply(JSON.stringify(users, null, 4))
         })
       })
-      
+
       this.signIn.enter((ctx) => {
         ctx.reply('hi please enter your age: ')
-        var tempUser = {}
+        this.tempUser = {}
       })
       this.signIn.leave((ctx) => {
+        console.log('adding to database')
         this.database['User'].create({
-            name: tempUser['name'],
-            chatId: tempUser['chatId'],
-            class: tempUser['class'],
-            age: tmepUser['age'],
-            province: tempUser['province']
+            name: this.tempUser['name'],
+            chatId: this.tempUser['chatId'],
+            class: this.tempUser['class'],
+            age: this.tempUser['age'],
+            province: this.tempUser['province']
         })
         ctx.reply('thank you bye')
       })
       this.signIn.on('text', (ctx) => {
-          if (!tempUser['age']){
-            tempUser['age'] = ctx['text']
-            tempUser['chatId'] = ctx['chat'].id
-            tempUser['name'] = ctx['message']['from'].first_name
-            tempUser['class'] = 'normal'
+          // console.log('temp user is: ', this.tempUser)
+          if (!this.tempUser['age']){
+            // console.log('this is age enterred by user: ', ctx.text)
+            this.tempUser['age'] = ctx['message'].text
+            this.tempUser['chatId'] = ctx['chat'].id
+            this.tempUser['name'] = ctx['message']['from'].first_name
+            this.tempUser['class'] = 'normal'
             ctx.reply('lets enter your province')
           }
           else{
-            tempUser['province'] = ctx['text']
-            leave()
+            // console.log('leaving the scene')
+            this.tempUser['province'] = ctx['message'].text
+            this.signIn.leave(ctx)
+            ctx.scene.enter('left')
           }
       })
+      this.left.enter(() => leave())
     }
 
     start() {
@@ -63,6 +71,7 @@ class Bot {
         this.bot.use(stage.middleware())
         stage.command('cancel', leave())
         stage.register(this.signIn)
+        stage.register(this.left)
         this.bot.command('register', (ctx) => ctx.scene.enter('signIn'))
         this.bot.launch()
     }
