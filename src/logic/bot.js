@@ -6,7 +6,7 @@ const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
 
 const { db } = require('../database/models/index.js');
-console.log(db)
+// console.log(db)
 
 class Bot {
     constructor(token) {

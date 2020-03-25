@@ -82,6 +82,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 console.log('index.js had been called ')
 // console.log(db)
-module.exports = db;
+module.exports.db = db;
 
 //models/index.js
