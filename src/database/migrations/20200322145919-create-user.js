@@ -33,10 +33,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      province: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
+      // province: {
+      //   type: Sequelize.STRING,
+      //   allowNull: true
+      // },
       // self_bio: {
       //   type: Sequelize.STRING,
       //   allowNull: true

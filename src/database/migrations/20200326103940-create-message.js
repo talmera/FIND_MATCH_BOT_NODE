@@ -8,11 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sender_id: {
-        type: Sequelize.INTEGER
+      SenderId: {
+        type: sequelize.INTEGER,
+        refrences: {
+          model: 'User',
+          key: 'id'
+        }
       },
-      reciever_id: {
-        type: Sequelize.INTEGER
+      ChatId: {
+        type: sequelize.INTEGER,
+        refrences: {
+          model: 'Chat',
+          key: 'id'
+        }
       },
       content: {
         type: Sequelize.TEXT

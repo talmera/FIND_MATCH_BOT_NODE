@@ -12,6 +12,13 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      UserId: {
+        type: sequelize.INTEGER,
+        refrences: {
+          model: 'User',
+          key: 'id'
+        }
+      },
       topic: {
         type: Sequelize.STRING,
         allowNull: true

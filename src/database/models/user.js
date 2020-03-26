@@ -2,41 +2,62 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name:{
-      DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     lastName: {
-      DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
-    // tg_uname: {
-    //   DataTypes.STRING,
-    //   unique: true,
-    //   allowNull: true
-    // },
+    tg_uname: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: true
+    },
+    chat_show_name: {
+      type: DataTypes.STRING,
+      unique: false,
+      allowNull: false
+    },
     chatId: {
       type: DataTypes.STRING,
       unique: true
     },
     rank : {
-      DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     age: {
-      DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: true
     },
-    province: {
-      DataTypes.STRING,
-      allowNull: true
-    },
+    // province: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true
+    // },
     // self_bio: {
-    //   DataTypes.TEXT,
+    //   type: DataTypes.TEXT,
     //   allowNull: true
     // }
   }, {});
   User.associate = function(models) {
     // associations can be defined here
+    User.hasMany(models.Message, {
+      foreignKey: 'SenderId',
+      onDelete: 'CASCADE'
+    }),
+    User.hasMany(models.Moral, {
+      foreignKey: 'UserId',
+      onDelete: 'CASCADE'
+    }),
+    User.hasMany(models.Location, {
+      foreignKey: 'UserId',
+      onDelete: 'CASCADE'
+    }),
+    User.hasMany(models.Pic, {
+      foreignKey: 'UserId',
+      onDelete: 'CASCADE'
+    })
   };
   return User;
 };

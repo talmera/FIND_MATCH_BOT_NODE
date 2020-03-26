@@ -12,6 +12,27 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true
       },
+      UserId: {
+        type: sequelize.INTEGER,
+        refrences: {
+          model: 'User',
+          key: 'id'
+        }
+      },
+      CityId: {
+        type: sequelize.INTEGER,
+        refrences: {
+          model: 'City',
+          key: 'id'
+        }
+      },
+      CountryId: {
+        type: sequelize.INTEGER,
+        refrences: {
+          model: 'Country',
+          key: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
