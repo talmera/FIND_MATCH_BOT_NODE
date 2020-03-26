@@ -9,20 +9,38 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
+      lastName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      // tg_uname: {
+      //   type: Sequelize.STRING,
+      //   allowNull: true,
+      //   unique: true
+      // },
       chatId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
-      class: {
-        type: Sequelize.STRING
+      rank : {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       age: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
       },
       province: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
       },
+      // self_bio: {
+      //   type: Sequelize.STRING,
+      //   allowNull: true
+      // }
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
