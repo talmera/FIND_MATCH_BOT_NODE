@@ -19,14 +19,14 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         },
       },
       ChatId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Chat',
+          model: 'Chats',
           key: 'id'
         },
         allowNull: false

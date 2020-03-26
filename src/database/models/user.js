@@ -60,11 +60,11 @@ module.exports = (sequelize, DataTypes) => {
     }),
     User.belongsToMany(models.Report, {
       through: 'User_Report',
-      as: 'User'
+      as: 'ReportUseres'
     }),
     User.belongsToMany(models.Chat, {
       through: 'User_Chat',
-      as: 'User'
+      as: 'ChatUseres'
     })
   };
   return User;

@@ -15,21 +15,21 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         }
       },
       CityId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'City',
+          model: 'Cities',
           key: 'id'
         }
       },
       CountryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Country',
+          model: 'Countries',
           key: 'id'
         }
       },

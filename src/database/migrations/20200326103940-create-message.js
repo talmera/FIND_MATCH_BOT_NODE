@@ -18,7 +18,7 @@ module.exports = {
       ChatId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Chat',
+          model: 'Chats',
           key: 'id'
         }
       },

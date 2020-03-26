@@ -16,11 +16,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      // tg_uname: {
-      //   type: Sequelize.STRING,
-      //   allowNull: true,
-      //   unique: true
-      // },
+      tg_uname: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true
+      },
+      chat_show_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       chatId: {
         type: Sequelize.STRING,
         unique: true
