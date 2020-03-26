@@ -1,37 +1,35 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Locations', {
-      id: {
+    /*
+      Add altering commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
+    */
+  return queryInterface.createTable('User_Report', {
+    id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      comment: {
-        type: Sequelize.TEXT,
-        allowNull: true
       },
       UserId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
           key: 'id'
-        }
+        },
       },
-      CityId: {
+      ReportId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Cities',
+          model: 'Reports',
           key: 'id'
-        }
-      },
-      CountryId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Countries',
-          key: 'id'
-        }
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -41,9 +39,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
-  },
+    })
+},
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Locations');
+    /*
+      Add reverting commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.dropTable('users');
+    */
+    return queryInterface.dropTable('User_Report')
   }
 };

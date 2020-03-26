@@ -9,16 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       SenderId: {
-        type: sequelize.INTEGER,
-        refrences: {
-          model: 'User',
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
           key: 'id'
         }
       },
       ChatId: {
-        type: sequelize.INTEGER,
-        refrences: {
-          model: 'Chat',
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Chats',
           key: 'id'
         }
       },
