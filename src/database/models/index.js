@@ -69,10 +69,10 @@ Object.keys(db).forEach(modelName => {
 //   province: 'ramsar'
 // })
 
-// db['User'].findAll().then(users => {
-//   // console.log('users is ', users)
-//   console.log('all USERS ', JSON.stringify(users, null, 4))
-// })
+db['User'].findAll().then(users => {
+  // console.log('users is ', users)
+  console.log('all USERS ', JSON.stringify(users, null, 4))
+})
 
 // db.createOrUpdateUsers = (UserJson) => {
 //   db['User']
