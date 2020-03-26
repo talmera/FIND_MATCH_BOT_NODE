@@ -1,29 +1,35 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Messages', {
-      id: {
+    /*
+      Add altering commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
+    */
+  return queryInterface.createTable('User_Chat', {
+    id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      SenderId: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'User',
           key: 'id'
-        }
+        },
       },
       ChatId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Chat',
           key: 'id'
-        }
-      },
-      content: {
-        type: Sequelize.TEXT
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -33,9 +39,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
-  },
+    })
+},
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Messages');
+    /*
+      Add reverting commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.dropTable('users');
+    */
+    return queryInterface.dropTable('User_Chat')
   }
 };

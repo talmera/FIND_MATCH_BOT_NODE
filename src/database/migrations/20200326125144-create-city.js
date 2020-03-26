@@ -9,8 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       // LocationId: {
-      //   type: sequelize.INTEGER,
-      //   refrences: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
       //     model: 'User',
       //     key: 'id'
       //   }

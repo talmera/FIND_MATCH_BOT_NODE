@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Chat = sequelize.define('Chat', {
     chat_id: {
-      DataTypes.STRING,
+      type: DataTypes.STRING,
       unique: true,
       allowNull: false
     }
@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     Chat.hasMany(models.Message, {
       foreignKey: 'ChatId',
       onDelete: 'CASCADE'
+    }),
+    Chat.belongsToMany(models.User, {
+      through: 'User_Chat',
+      as: 'Chat'
     })
   };
   return Chat;
