@@ -1,25 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Report = sequelize.define('Report', {
-    // user_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    // user_target_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // }
+    reason: DataTypes.STRING
   }, {});
   Report.associate = function(models) {
     // associations can be defined here
-    Report.belongsToMany(models.User, {
-      through: 'User_Report',
-      as: 'Report'
-    })
   };
   return Report;
 };
