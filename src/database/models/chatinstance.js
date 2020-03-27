@@ -5,12 +5,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   ChatInstance.associate = function(models) {
     ChatInstance.hasMany(models.Message, {
-      foreignKey: 'ChatId',
+      foreignKey: 'chatiId',
       onDelete: 'CASCADE'
     }),
-    ChatInstance.belongsToMany(models.User, {
-      through: 'User_Chat',
-      as: 'Chat'
+    
+
+    ChatInstance.belongsTo(models.User, {
+      as: 'Chat',
+      onDelete: 'CASCADE'
     }),
     ChatInstance.hasMany(models.Report, {
       foreignKey: 'chatiId'

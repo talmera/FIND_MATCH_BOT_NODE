@@ -19,15 +19,17 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'SenderId',
       onDelete: 'CASCADE'
     }),
-    User.belongsToMany(models.Report, {
-      through: 'User_Report',
-      as: 'ReportUsers'
-    }),
-    User.belongsToMany(models.Chat, {
-      through: 'User_Chat',
-      as: 'ChatUsers'
+
+
+
+
+    User.belongsToMany(User, {
+      through: models.ChatInstance,
+      as: "Chatee"
     })
 
+    User.belongsToMany(User, {as: "Reporter", foreignKey: "reporterId", through: models.Report})
+    User.belongsToMany(User, {as: "Reported", foreignKey: "reportedId", through: models.Report})
   };
   return User;
 };
