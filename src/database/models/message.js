@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.TEXT
   }, {});
   Message.associate = function(models) {
-    // associations can be defined here
+    Message.belongsTo(models.User)
+    Message.belongsTo(models.Chat)
   };
   return Message;
 };

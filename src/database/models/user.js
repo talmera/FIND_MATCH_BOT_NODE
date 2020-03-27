@@ -15,7 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     rank: DataTypes.STRING
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Message, {
+      foreignKey: 'SenderId',
+      onDelete: 'CASCADE'
+    }),
+    User.belongsToMany(models.Report, {
+      through: 'User_Report',
+      as: 'ReportUsers'
+    }),
+    User.belongsToMany(models.Chat, {
+      through: 'User_Chat',
+      as: 'ChatUsers'
+    })
+
   };
   return User;
 };
