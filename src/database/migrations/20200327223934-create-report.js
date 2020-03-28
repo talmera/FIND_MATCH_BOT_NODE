@@ -11,6 +11,15 @@ module.exports = {
       reason: {
         type: Sequelize.STRING
       },
+      reporterId:{
+        type:Sequelize.STRING
+      },
+      reportedId:{
+        type:Sequelize.STRING
+      },
+      chatiId:{
+        type:Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

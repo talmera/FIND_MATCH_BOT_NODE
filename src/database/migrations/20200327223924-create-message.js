@@ -14,6 +14,17 @@ module.exports = {
       content: {
         type: Sequelize.TEXT
       },
+      senderId:{
+        type:Sequelize.STRING,
+        allowNull: false
+      },
+      receiverId:{
+        type:Sequelize.STRING,
+        allowNull: false,
+      },
+      chatiId:{
+        type:Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

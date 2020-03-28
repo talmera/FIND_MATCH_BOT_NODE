@@ -12,24 +12,30 @@ module.exports = (sequelize, DataTypes) => {
     profile_name: DataTypes.STRING,
     profile_pic_addr: DataTypes.STRING,
     moral: DataTypes.STRING,
-    rank: DataTypes.STRING
+    rank: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Message, {
-      foreignKey: 'SenderId',
+      foreignKey: 'senderId',
       onDelete: 'CASCADE'
     }),
 
 
-
-
-    User.belongsToMany(User, {
-      through: models.ChatInstance,
-      as: "Chatee"
+    User.belongsToMany(models.ChatIntance, {
+      through: 'User_ChatInstance',
+      as: 'Users'
     })
+
 
     User.belongsToMany(User, {as: "Reporter", foreignKey: "reporterId", through: models.Report})
     User.belongsToMany(User, {as: "Reported", foreignKey: "reportedId", through: models.Report})
+
+
+    User.belongsToMany(User, {as: "Sender", foreignKey: "senderId", through: models.Message})
+    User.belongsToMany(User, {as: "Receiver", foreignKey: "receiverId", through: models.Message})
   };
   return User;
 };
