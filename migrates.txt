@@ -1,0 +1,28 @@
+sequelize model:generate --name User --attributes name:string,last_name:string,tg_id:string,chat_id:string,province:char,city:char,age:char,bio:text,profile_name:string,profile_pic_addr:string,moral:string,rank:string
+
+
+
+--------------------------------
+
+
+sequelize migration:generate --name UserChatInstance
+
+
+sequelize model:generate --name ChatInstance --attributes chat_id:string
+
+
+sequelize model:generate --name Message --attributes type:char,content:text
+
+
+
+
+
+sequelize model:generate --name Report --attributes reason:string
+
+
+
+
+
+
+sequelize seed:generate --name demo-users
+

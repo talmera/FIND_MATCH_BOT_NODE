@@ -3,13 +3,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('ChatInstances', {
       id: {
-        allowNull: false,
+        // allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       chat_id: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       // reporterId:{
       //   type:Sequelize.INTEGER,
@@ -20,18 +21,18 @@ module.exports = {
       //   }
       // },
       starterId:{
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         }
       },
       starteeId:{
-        type: sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'User',
+          model: 'Users',
           key: 'id'
         }
       },

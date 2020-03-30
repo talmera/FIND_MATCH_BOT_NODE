@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    email:  DataTypes.STRING
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Message, {
@@ -37,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.Report, {
       foreignKey: 'reporteeId',
       onDelete: 'CASCADE'
-    }),
+    })
 
     // User.belongsToMany(User, {as: "Reporter", foreignKey: "reporterId", through: models.Report})
     // User.belongsToMany(User, {as: "Reported", foreignKey: "reportedId", through: models.Report})

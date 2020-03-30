@@ -1,42 +1,43 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Reports', {
+    return queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      reason: {
-        type: Sequelize.STRING
+      type: {
+        type: Sequelize.CHAR
       },
-      reporterId:{
+      content: {
+        type: Sequelize.TEXT
+      },
+      // chatId: {
+      //   type: Sequelize.INTEGER,
+      //   onDelete: 'CASCADE',
+      //   references: {
+      //     model: 'User',
+      //     key: 'id'
+      //   }
+      // },
+      senderId:{
         type:Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'User',
-          key: 'id'
-        }
-      },
-      reporteeId:{
-        type:Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'User',
-          key: 'id'
-        }
-      },
-      chatId: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
         onDelete: 'CASCADE',
         references: {
-          model: 'ChatIntance',
+          model: 'Users',
           key: 'id'
         }
       },
       chatiId:{
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'ChatInstances',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -49,6 +50,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Reports');
+    return queryInterface.dropTable('Messages');
   }
 };
