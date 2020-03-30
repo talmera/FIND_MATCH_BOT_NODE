@@ -12,16 +12,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'chatiId',
       onDelete: 'CASCADE'
     }),
-    
-
-    ChatInstance.belongsToMany(models.User, {
-      as: 'Chati',
-      through: 'User_ChatInstance',
-    }),
     ChatInstance.hasMany(models.Report, {
-      foreignKey: 'chatiId'
+      foreignKey: 'chatiId',
+      onDelete: 'CASCADE'
+    }),
+    ChatInstance.belongsTo(models.User, {
+      foreignKey: 'starterId',
+      onDelete: 'CASCADE'
+    }),
+    ChatInstance.belongsTo(model.User, {
+      foreignKey: 'starteeId',
+      onDelete: 'CASCADE'
     })
-
   };
   return ChatInstance;
 };

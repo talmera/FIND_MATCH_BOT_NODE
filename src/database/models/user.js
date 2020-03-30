@@ -22,20 +22,27 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'senderId',
       onDelete: 'CASCADE'
     }),
+    User.hasMany(models.ChatIntance, {
+      foreignKey: 'starterId',
+      onDelete: 'CASCADE'
+    }),
+    User.hasMany(models.ChatIntance, {
+      foreignKey: 'starteeId',
+      onDelete: 'CASCADE'
+    }),
+    User.hasMany(models.Report, {
+      foreignKey: 'reporterId',
+      onDelete: 'CASCADE'
+    }),
+    user.hasMany(models.Report, {
+      foreignKey: 'reporteeId',
+      onDelete: 'CASCADE'
+    }),
 
-
-    User.belongsToMany(models.ChatIntance, {
-      through: 'User_ChatInstance',
-      as: 'Users'
-    })
-
-
-    User.belongsToMany(User, {as: "Reporter", foreignKey: "reporterId", through: models.Report})
-    User.belongsToMany(User, {as: "Reported", foreignKey: "reportedId", through: models.Report})
-
-
-    User.belongsToMany(User, {as: "Sender", foreignKey: "senderId", through: models.Message})
-    User.belongsToMany(User, {as: "Receiver", foreignKey: "receiverId", through: models.Message})
+    // User.belongsToMany(User, {as: "Reporter", foreignKey: "reporterId", through: models.Report})
+    // User.belongsToMany(User, {as: "Reported", foreignKey: "reportedId", through: models.Report})
+    // User.belongsToMany(User, {as: "Sender", foreignKey: "senderId", through: models.Message})
+    // User.belongsToMany(User, {as: "Receiver", foreignKey: "receiverId", through: models.Message})
   };
   return User;
 };

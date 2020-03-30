@@ -14,16 +14,30 @@ module.exports = {
       content: {
         type: Sequelize.TEXT
       },
+      // chatId: {
+      //   type: Sequelize.INTEGER,
+      //   onDelete: 'CASCADE',
+      //   references: {
+      //     model: 'User',
+      //     key: 'id'
+      //   }
+      // },
       senderId:{
-        type:Sequelize.STRING,
-        allowNull: false
-      },
-      receiverId:{
-        type:Sequelize.STRING,
+        type:Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'User',
+          key: 'id'
+        }
       },
       chatiId:{
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'ChatIntance',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

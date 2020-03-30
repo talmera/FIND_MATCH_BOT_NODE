@@ -12,10 +12,28 @@ module.exports = {
         type: Sequelize.STRING
       },
       reporterId:{
-        type:Sequelize.STRING
+        type:Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'User',
+          key: 'id'
+        }
       },
-      reportedId:{
-        type:Sequelize.STRING
+      reporteeId:{
+        type:Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'User',
+          key: 'id'
+        }
+      },
+      chatId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'ChatIntance',
+          key: 'id'
+        }
       },
       chatiId:{
         type:Sequelize.STRING
