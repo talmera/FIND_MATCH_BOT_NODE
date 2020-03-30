@@ -27,13 +27,13 @@ module.exports = {
         unique: true
       },
       province: {
-        type: Sequelize.CHAR
+        type: Sequelize.CHAR(4)
       },
       city: {
-        type: Sequelize.CHAR
+        type: Sequelize.CHAR(40)
       },
       age: {
-        type: Sequelize.CHAR
+        type: Sequelize.CHAR(4)
       },
       bio: {
         type: Sequelize.TEXT
@@ -53,7 +53,8 @@ module.exports = {
       },
       email:{
         type: Sequelize.STRING,
-      },      
+        unique: true
+      },
       
       createdAt: {
         allowNull: false,

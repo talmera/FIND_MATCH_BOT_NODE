@@ -9,11 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       reason: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       reporterId:{
         type:Sequelize.INTEGER,
         onDelete: 'CASCADE',
+        allowNull: false,
         references:{
           model: 'Users',
           key: 'id'
@@ -22,6 +24,7 @@ module.exports = {
       reporteeId:{
         type:Sequelize.INTEGER,
         onDelete: 'CASCADE',
+        allowNull: false,
         references:{
           model: 'Users',
           key: 'id'
@@ -30,14 +33,15 @@ module.exports = {
       chatId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
+        allowNull: false,
         references: {
           model: 'ChatInstances',
           key: 'id'
         }
       },
-      chatiId:{
-        type:Sequelize.STRING
-      },
+      // chatiId:{
+      //   type:Sequelize.STRING
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -8,18 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      chat_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      // reporterId:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete: 'CASCADE',
-      //   references:{
-      //     model: 'User',
-      //     key: 'id'
-      //   }
+      // chat_id: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
       // },
+
       starterId:{
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
