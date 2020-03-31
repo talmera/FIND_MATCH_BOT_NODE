@@ -13,5 +13,5 @@ start()
         console.log(`Bot Started: ${result}`);
     })
     .catch(error => {
-        console.log(`Bot Error: ${error}`);
+        console.log(`Bot Error: ${error.stack}`);
     });

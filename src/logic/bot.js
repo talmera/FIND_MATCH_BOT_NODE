@@ -1,17 +1,21 @@
+
 const Telegraf = require('telegraf')
 
 const session = require('telegraf/session')
 const Stage = require('telegraf/stage')
-const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
 
-const { db } = require('../database/models/index.js')
+const { GenderWaiterScene } = require("./scenes/sign_up/waiting_for_gender.js");
+const { Starter } = require("./scenes/start.js");
+
+const { Database } = require("../database/db_manager.js");
+
 // console.log(db)
 
 class Bot {
     constructor(token) {
         this.bot = new Telegraf(token)
-        this.database = db
+        this.database = new Database();
         this.bot.catch(error => {
             console.error(`Bot error: ${error.stack}`)
         })
@@ -20,15 +24,20 @@ class Bot {
 
 
     start() {
+        this.database.init();
         const stage = new Stage()
         this.bot.use(session())
         this.bot.use(Telegraf.log())
         this.bot.use(stage.middleware())
         stage.command('cancel', leave())
-        stage.register(this.signIn)
-        stage.register(this.left)
-        this.bot.command('register', (ctx) => ctx.scene.enter('signIn'))
+        stage.register(new GenderWaiterScene(this.database))
+        stage.register(new Starter(this.database))
+        this.bot.command('start', (ctx) => ctx.scene.enter('starter'))
+        // this.bot.command('shoroo', (ctx) => ctx.scene.enter('shoroo'))
         this.bot.launch()
+    }
+    async init(){
+
     }
 }
 
