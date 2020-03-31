@@ -10,15 +10,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     senderId:{
-      type:Sequelize.STRING,
+      type:DataTypes.STRING,
       allowNull: false
     },
     receiverId:{
-      type:Sequelize.STRING,
+      type:DataTypes.STRING,
       allowNull: false,
     },
     chatiId:{
-      type:Sequelize.STRING
+      type:DataTypes.STRING
     }
   }, {});
   Message.associate = function(models) {
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'senderId',
       onDelete: 'CASCADE'
     }),
-    Message.belongsTo(models.ChatIntance, {
+    Message.belongsTo(models.ChatInstance, {
       foreignKey: 'chatId',
       onDelete: 'CASCADE'
     })

@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     chatiId:{
-      type:Sequelize.STRING
+      type: DataTypes.STRING
     }
   }, {});
   Report.associate = function(models) {
@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'reporteeId',
       onDelete: 'CASCADE'
     }),
-    Report.belongsTo(models.ChatIntance, {
-      foreignKey; 'chatId',
+    Report.belongsTo(models.ChatInstance, {
+      foreignKey: 'chatId',
       onDelete: 'CASCADE'
     })
   };

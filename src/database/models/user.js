@@ -17,17 +17,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     email:  DataTypes.STRING
-  }, {});
+  }, {}); 
   User.associate = function(models) {
     User.hasMany(models.Message, {
       foreignKey: 'senderId',
       onDelete: 'CASCADE'
     }),
-    User.hasMany(models.ChatIntance, {
+    User.hasMany(models.ChatInstance, {
       foreignKey: 'starterId',
       onDelete: 'CASCADE'
     }),
-    User.hasMany(models.ChatIntance, {
+    User.hasMany(models.ChatInstance, {
       foreignKey: 'starteeId',
       onDelete: 'CASCADE'
     }),
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'reporterId',
       onDelete: 'CASCADE'
     }),
-    user.hasMany(models.Report, {
+    User.hasMany(models.Report, {
       foreignKey: 'reporteeId',
       onDelete: 'CASCADE'
     })

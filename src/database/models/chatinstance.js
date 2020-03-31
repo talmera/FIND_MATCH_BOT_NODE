@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'starterId',
       onDelete: 'CASCADE'
     }),
-    ChatInstance.belongsTo(model.User, {
+    ChatInstance.belongsTo(models.User, {
       foreignKey: 'starteeId',
       onDelete: 'CASCADE'
     })

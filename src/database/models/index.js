@@ -9,10 +9,29 @@ const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (config.url) {
+  console.log('new sequelize commited : '+ config.url)
+  sequelize = new Sequelize(config.url, {
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  console.log('new sequelize commited : '+ config.database + ' user name: '+ config.username+ ' and password: ' + config.username)
+  sequelize = new Sequelize(config.database, config.username, config.password, {
+    host: config.host,
+    dialect: 'postgres'
+  },{
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
 }
 
 fs
@@ -30,6 +49,15 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
