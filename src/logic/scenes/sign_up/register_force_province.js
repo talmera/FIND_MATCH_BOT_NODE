@@ -32,7 +32,7 @@ class Register_Force_Province extends Scene {
             ctx.reply("select your province",keyboard.draw())
         })
         this.leave((ctx) => {
-          keyboar.remove(this.all_provinces)
+          keyboard.remove(this.all_provinces)
           const user = this.database['User'].findAll({
             where: {
               tg_id: ctx.message.from.id
