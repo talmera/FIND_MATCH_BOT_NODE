@@ -14,21 +14,12 @@ class Starter extends Scene {
     }
     async init_functions(){
         this.enter((ctx) => {
-            // console.log('\n \n \n \ni have entered this.enter of starter ')
-            console.log('contxt is : \n ', ctx.message)
-            // console.log('end of context')
-            this.database['User'].findAll({
-              attributes: ['tg_id'],
-              where: {
-                tg_id: ctx.message.from.id
-              }
-            })
-            .then((user) => {
-              // user exists so do something here
+          this.database.user_exist_by_tg_id(ctx.message.from.id.toString())
+          .then(user_exist => {
+            console.log(user_exist)
+            if (user_exist) {
               ctx.scene.enter('base_menu')
-            })
-            .catch((err) => {
-              // user dont exists
+            } else {
               const options = {
                 inline: false, // default
                 duplicates: false, // default
@@ -37,10 +28,9 @@ class Starter extends Scene {
               this.keyboard = new Keyboard(options);
               this.keyboard
               .add('/newRegister') // second line
-              // TODO : check if user already exists in data base
               ctx.reply("کاربر عزیز خوش اومدی گویا ثبت نام کردی دکمه شرو رو بزن تا ثبت نام بکنیم",this.keyboard.draw())
-              // ctx.reply(err)
-            })
+            }
+          })
         })
         this.leave((ctx) => {
             // ctx.reply('afarin')
@@ -51,10 +41,13 @@ class Starter extends Scene {
           const user = this.database['User'].create({
             name: ctx['message']['from'].first_name,
             last_name: ctx.message.from.last_name,
-            tg_id: ctx.message.from.id,
-            chat_id: ctx.message.chat.id,
+            tg_id: ctx.message.from.id.toString(),
+            chat_id: ctx.message.chat.id.toString(),
             rank: 'primary'
           })
+          // console.log('user is ', user)
+          // console.log(typeof(user))
+          // console.log('is instance of '+ user instanceof this.database['User'])
           ctx.scene.enter('register_force_gender')
         })
         this.on('message', (ctx) => ctx.reply("کاربر عزیز خوش اومدی گویا ثبت نام کردی دکمه شرو رو بزن تا ثبت نام بکنیم"))

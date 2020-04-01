@@ -7,10 +7,10 @@ const { leave } = Stage
 class Register_Force_Gender extends Scene {
     constructor(database) {
         super("register_force_gender")
-
+        this.keyboard = null
         this.database = database
         this.init_functions()
-        this.selected_gender = ''
+        this.selected_gender = null
     }
     async init_functions(){
         this.enter((ctx) => {
@@ -18,48 +18,48 @@ class Register_Force_Gender extends Scene {
             const options = {
                 inline: false, // default
                 duplicates: false, // default
-                newline: false, // default
+                newline: false // default
               }
-              const keyboard = new Keyboard(options)
-              keyboard
+              this.keyboard = new Keyboard(options)
+              this.keyboard
                 .add('boy', 'girl') // first line
                 .add('other') // second line
 
-            ctx.reply("select your gender",keyboard.draw())
+            ctx.reply("select your gender",this.keyboard.draw())
         })
         this.leave((ctx) => {
-          keyboar.remove('boy', 'girl', 'other')
-          const user = this.database['User'].findAll({
-            where: {
-              tg_id: ctx.message.from.id
+          console.log('exiting gender')
+          this.database['User'].update(
+            {
+              sex: this.selected_gender.toString()
+            },
+            {
+              where: {
+                tg_id: ctx.message.from.id.toString()
+              }
             }
+          )
+          .then((result) => {
+            ctx.reply('gender sabt shod ',this.keyboard.clear())
           })
-          user.update({
-            sex: this.selected_gender
-          })
-          user.save()
-          ctx.reply('gender sabt shod ')
-          ctx.scene.enter('register_force_age')
-          // TODO : save age in database
         })
-        this.hears(/boy/gi, () => {
+        this.hears(/boy/gi, (ctx) => {
           this.selected_gender = 'boy'
-          this.leave()
+          console.log('i am boy')
+          ctx.scene.enter('register_force_age')
         })
-        this.hears(/girl/gi, () => {
+        this.hears(/girl/gi, (ctx) => {
           this.selected_gender = 'girl'
-          this.leave()
+          ctx.scene.enter('register_force_age')
         })
-        this.hears(/other/gi, () => {
+        this.hears(/other/gi, (ctx) => {
           this.selected_gender = 'other'
-          this.leave()
+          ctx.scene.enter('register_force_age')
         })
         this.on('message', (ctx) => {
-            ctx.reply('for exit enter /cancel',keyboard.draw())
-    })
+            ctx.reply('for exit enter /cancel')
+        })
     }
-
-
 }
 
 

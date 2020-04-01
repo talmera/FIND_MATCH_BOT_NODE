@@ -7,7 +7,7 @@ const { leave } = Stage
 class Register_Force_Province extends Scene {
     constructor(database) {
         super("register_force_province")
-
+        this.keyboard = null
         this.database = database
         this.init_functions()
         this.all_provinces = [
@@ -22,36 +22,37 @@ class Register_Force_Province extends Scene {
             const options = {
                 inline: false, // default
                 duplicates: false, // default
-                newline: false, // default
+                newline: false // default
               }
-              const keyboard = new Keyboard(options)
-              keyboard
+              this.keyboard = new Keyboard(options)
+              this.keyboard
                 .add(this.all_provinces) // first line
                 // .add('other') // second line
 
-            ctx.reply("select your province",keyboard.draw())
+            ctx.reply("select your province",this.keyboard.draw())
         })
         this.leave((ctx) => {
-          keyboard.remove(this.all_provinces)
-          const user = this.database['User'].findAll({
-            where: {
-              tg_id: ctx.message.from.id
+          this.database['User'].update(
+            {
+              province: this.selected_province.toString()
+            },
+            {
+              where: {
+                tg_id: ctx.message.from.id.toString()
+              }
             }
+          )
+          .then((result) => {
+            ctx.reply('ostan tamam shod ', this.keyboard.clear())
           })
-          user.update({
-            province: this.province.toString()
-          })
-          user.save()
-          ctx.reply('province sabt shod ')
-          ctx.scene.enter('register_force_name')
         })
         this.on('message', (ctx) => {
           if ( this.all_provinces.includes(ctx.message.text)) {
             this.selected_province = ctx.message.text
-            this.leave()
+            ctx.scene.enter('register_force_name')
           }
           else{
-            ctx.reply('for exit enter /cancel',keyboard.draw())
+            ctx.reply('for exit enter /cancel',this.keyboard.draw())
           }
     })
     }

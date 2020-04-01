@@ -59,6 +59,18 @@ sequelize
     console.error('Unable to connect to the database:', err)
   })
 
+db.user_exist_by_tg_id = (id) => {
+ return db.User.findOne({
+  where:{
+    tg_id: id
+  }
+  })
+  .then(token => {
+    return token !== null
+  })
+}
+
+
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 

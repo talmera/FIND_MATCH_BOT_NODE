@@ -32,7 +32,7 @@ class Base_Menu extends Scene {
         this.hears(/\/cancel/gi, () => {
           this.leave()
         })
-        this.hears(/DebugUsersQuery/gi, () => {
+        this.hears(/DebugUsersQuery/gi, (ctx) => {
           const user = this.database['User'].findAll()
           .then((users) => {
               ctx.reply(JSON.stringify(users, null, 4))

@@ -14,26 +14,27 @@ class Register_Force_Name extends Scene {
     }
     async init_functions(){
         this.enter((ctx) => {
-            ctx.reply("enter a name to show others",keyboard.draw())
+            ctx.reply("enter a name to show others")
         })
         this.leave((ctx) => {
-          const user = this.database['User'].findAll({
-            where: {
-              tg_id: ctx.message.from.id
+          this.database['User'].update(
+            {
+              profile_name: this.selected_name.toString()
+            },
+            {
+              where: {
+                tg_id: ctx.message.from.id.toString()
+              }
             }
+          )
+          .then((result) => {
+            ctx.reply('sabt tamam shod ')
           })
-          user.update({
-            profile_name: this.selected_name.toString()
-          })
-          user.save()
-          ctx.reply(' sabtnam tamam shod ')
-          ctx.scene.enter('base_menu')
-          // TODO : save name in database
         })
         this.on('message', (ctx) => {
             // TODO: use regex to contorl names
             this.selected_name = ctx.message.text
-            this.leave()
+            ctx.scene.enter('base_menu')
             // ctx.reply('false input or for exit enter /cancel',keyboard.draw())
     })
     }

@@ -10,51 +10,61 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        type: Sequelize.STRING
       },
       last_name: {
-        type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        type: Sequelize.STRING
       },
       tg_id: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: true
       },
       chat_id: {
+        allowNull: true,
         type: Sequelize.STRING,
         unique: true
       },
       province: {
-        type: Sequelize.CHAR(4)
+        allowNull: true,
+        type: Sequelize.STRING
       },
       city: {
+        allowNull: true,
         type: Sequelize.CHAR(40)
       },
       age: {
+        allowNull: true,
         type: Sequelize.CHAR(4)
       },
       bio: {
+        allowNull: true,
         type: Sequelize.TEXT
       },
       profile_name: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       profile_pic_addr: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       moral: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       rank: {
-        type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        type: Sequelize.STRING
       },
       sex: {
-        type: Sequelize.STRING,
+        allowNull: true,
+        type: Sequelize.STRING
       },
       email:{
+        allowNull: true,
         type: Sequelize.STRING,
         unique: true
       },

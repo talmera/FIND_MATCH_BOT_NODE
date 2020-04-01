@@ -14,30 +14,31 @@ class Register_Force_Age extends Scene {
     }
     async init_functions(){
         this.enter((ctx) => {
-            ctx.reply("enter your age",keyboard.draw())
+            ctx.reply("enter your age")
         })
         this.leave((ctx) => {
-          const user = this.database['User'].findAll({
-            where: {
-              tg_id: ctx.message.from.id
+          this.database['User'].update(
+            {
+              age: this.selected_age.toString()
+            },
+            {
+              where: {
+                tg_id: ctx.message.from.id.toString()
+              }
             }
+          )
+          .then((result) => {
+            ctx.reply('age sabt shod ')
           })
-          user.update({
-            age: this.selected_age.toString()
-          })
-          user.save()
-          ctx.reply('age sabt shod ')
-          ctx.scene.enter('register_force_province')
-          // TODO : save age in database
         })
         this.on('message', (ctx) => {
           var inp = parseInt(ctx.message.text)
           if (ctx.message.text == inp && inp < 100 && inp > 0){
             // some body entered some int
             this.selected_age = inp
-            this.leave()
+            ctx.scene.enter('register_force_province')
           }else{
-            ctx.reply('false input or for exit enter /cancel',keyboard.draw())
+            ctx.reply('false input or for exit enter /cancel',)
           }
     })
     }
