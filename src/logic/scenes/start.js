@@ -14,28 +14,40 @@ class Starter extends Scene {
     }
     async init_functions(){
         this.enter((ctx) => {
-
-            const options = {
+            // console.log('\n \n \n \ni have entered this.enter of starter ')
+            // console.log('contxt is : \n ', ctx.message)
+            // console.log('end of context')
+            this.database['User'].findAll({
+              attributes: ['tg_id'],
+              where: {
+                tg_id: ctx.message.from.id
+              }
+            })
+            .then((user) => {
+              // user exists so do something here
+            })
+            .catch((err) => {
+              // user dont exists
+              const options = {
                 inline: false, // default
                 duplicates: false, // default
                 newline: false, // default
-            };
-            const keyboard = new Keyboard(options);
-            keyboard
-                .add('/shoroo') // second line
-            // TODO : check if user already exists in data base
-            ctx.reply("کاربر عزیز خوش اومدی گویا ثبت نام کردی دکمه شرو رو بزن تا ثبت نام بکنیم",keyboard.draw())
-
-
-
-
-        
+              };
+              const keyboard = new Keyboard(options);
+              keyboard
+              .add('/start') // second line
+              // TODO : check if user already exists in data base
+              ctx.reply("کاربر عزیز خوش اومدی گویا ثبت نام کردی دکمه شرو رو بزن تا ثبت نام بکنیم",keyboard.draw())
+              // ctx.reply(err)
+            })
         })
         this.leave((ctx) => {
-            ctx.reply('afarin')            
-             
+            ctx.reply('afarin')
         })
-        this.command("shoroo",(ctx) => {ctx.scene.enter('shoroo')})
+        this.command("shoroo",(ctx) => {
+          keyboard.remove('/start')
+          ctx.scene.enter('shoroo')
+        })
         this.on('message', (ctx) => ctx.reply("کاربر عزیز خوش اومدی گویا ثبت نام کردی دکمه شرو رو بزن تا ثبت نام بکنیم"))
     }
 

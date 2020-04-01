@@ -5,26 +5,26 @@ const session = require('telegraf/session')
 const Stage = require('telegraf/stage')
 const { leave } = Stage
 
-const { GenderWaiterScene } = require("./scenes/sign_up/waiting_for_gender.js");
-const { Starter } = require("./scenes/start.js");
+const { GenderWaiterScene } = require("./scenes/sign_up/waiting_for_gender.js")
+const { Starter } = require("./scenes/start.js")
 
-const { Database } = require("../database/db_manager.js");
-
+const Database = require("./../database/models/index.js")
+// console.log('bot.js is db: '+Database)
 // console.log(db)
 
 class Bot {
     constructor(token) {
+        // console.log('data base is ', Database)
         this.bot = new Telegraf(token)
-        this.database = new Database();
+        this.database = Database
         this.bot.catch(error => {
             console.error(`Bot error: ${error.stack}`)
         })
-        this.tempUser = {}
+        // this.tempUser = {}
     }
 
 
     start() {
-        this.database.init();
         const stage = new Stage()
         this.bot.use(session())
         this.bot.use(Telegraf.log())
