@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.CHAR(40),
     age: DataTypes.CHAR(4),
     bio: DataTypes.TEXT,
+    sex: DataTypes.STRING,
     profile_name: DataTypes.STRING,
     profile_pic_addr: DataTypes.STRING,
     moral: DataTypes.STRING,
@@ -17,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     email:  DataTypes.STRING
-  }, {}); 
+  }, {});
   User.associate = function(models) {
     User.hasMany(models.Message, {
       foreignKey: 'senderId',
