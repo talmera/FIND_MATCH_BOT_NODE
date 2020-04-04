@@ -4,55 +4,48 @@ const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
 
 
+const SELECT_PROVINCE_MESSAGE = "استان زندگی خودتون رو وارد کنین"
+const PROVINCE_SAVED = 'استان انتخابی شما ثبت شد';
+const FALSE_INPUT_MESSAGE = 'for exit enter /cancel';
+const PROVINCES = [
+  'mashhad',
+  'tehran'
+]
 class Register_Force_Province extends Scene {
     constructor(database) {
         super("register_force_province")
-        this.keyboard = null
+        const options = {
+          inline: false, // default
+          duplicates: false, // default
+          newline: false // default
+        }
+        this.keyboard = new Keyboard(options)
         this.database = database
         this.init_functions()
-        this.all_provinces = [
-          'mashhad',
-          'tehran'
-        ]
         this.selected_province = ''
     }
     async init_functions(){
         this.enter((ctx) => {
+          console.log('register_force_province.js: entering province')
+            this.keyboard
+              .add(PROVINCES) // first line
 
-            const options = {
-                inline: false, // default
-                duplicates: false, // default
-                newline: false // default
-              }
-              this.keyboard = new Keyboard(options)
-              this.keyboard
-                .add(this.all_provinces) // first line
-                // .add('other') // second line
-
-            ctx.reply("select your province",this.keyboard.draw())
+            ctx.reply(SELECT_PROVINCE_MESSAGE,this.keyboard.draw())
         })
         this.leave((ctx) => {
-          this.database['User'].update(
-            {
-              province: this.selected_province.toString()
-            },
-            {
-              where: {
-                tg_id: ctx.message.from.id.toString()
-              }
-            }
-          )
-          .then((result) => {
-            ctx.reply('ostan tamam shod ', this.keyboard.clear())
-          })
+          console.log('register_force_province.js: leaving province')
+
+          ctx.session.province =  this.selected_province.toString()
+          ctx.reply(PROVINCE_SAVED, this.keyboard.clear())
+
         })
         this.on('message', (ctx) => {
-          if ( this.all_provinces.includes(ctx.message.text)) {
+          if ( PROVINCES.includes(ctx.message.text)) {
             this.selected_province = ctx.message.text
             ctx.scene.enter('register_force_name')
           }
           else{
-            ctx.reply('for exit enter /cancel',this.keyboard.draw())
+            ctx.reply(FALSE_INPUT_MESSAGE,this.keyboard.draw())
           }
     })
     }

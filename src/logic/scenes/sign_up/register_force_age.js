@@ -3,7 +3,9 @@ const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
 
-
+const AGE_SAVED = "سن شما با موفقیت ثبت شد"
+const SELECT_AGE = "سن خود را وارد کنید"
+const FALSE_INPUT_MESSAGE = 'اشتباه سنتون رو وارد کردید برای خروج /cancel رو بزنید'
 class Register_Force_Age extends Scene {
     constructor(database) {
         super("register_force_age")
@@ -13,23 +15,14 @@ class Register_Force_Age extends Scene {
         this.selected_age = ''
     }
     async init_functions(){
+      console.log('register_force_age.js: entering age')
         this.enter((ctx) => {
-            ctx.reply("enter your age")
+            ctx.reply(SELECT_AGE)
         })
         this.leave((ctx) => {
-          this.database['User'].update(
-            {
-              age: this.selected_age.toString()
-            },
-            {
-              where: {
-                tg_id: ctx.message.from.id.toString()
-              }
-            }
-          )
-          .then((result) => {
-            ctx.reply('age sabt shod ')
-          })
+          console.log('register_force_age.js: leaving age')
+          ctx.session.age =  this.selected_age.toString()
+          ctx.reply(AGE_SAVED)
         })
         this.on('message', (ctx) => {
           var inp = parseInt(ctx.message.text)
@@ -38,7 +31,7 @@ class Register_Force_Age extends Scene {
             this.selected_age = inp
             ctx.scene.enter('register_force_province')
           }else{
-            ctx.reply('false input or for exit enter /cancel',)
+            ctx.reply(FALSE_INPUT_MESSAGE)
           }
     })
     }

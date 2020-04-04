@@ -43,7 +43,6 @@ class Bot {
         stage.register(new Base_Menu(this.database))
 
         this.bot.command('start', (ctx) => ctx.scene.enter('starter'))
-        // this.bot.command('shoroo', (ctx) => ctx.scene.enter('shoroo'))
         this.bot.launch()
     }
     async init(){
