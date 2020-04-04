@@ -8,17 +8,17 @@ const REGISTER_BUTTON = "ثبت نام"
 class Starter extends Scene {
     constructor(database) {
         super("starter");
-        this.keyboard = null
-        this.database = database;
-        this.init_functions();
-
-
         const options = {
           inline: false, // default
           duplicates: false, // default
           newline: false, // default
         };
         this.keyboard = new Keyboard(options);
+        this.database = database;
+        this.init_functions();
+
+
+        
 
     }
     async init_functions(){
