@@ -35,7 +35,7 @@ class Register_Force_Province extends Scene {
         this.leave((ctx) => {
           console.log('register_force_province.js: leaving province')
 
-          ctx.session.province =  this.selected_province.toString()
+          ctx.session.user.province =  this.selected_province.toString()
           ctx.reply(PROVINCE_SAVED, this.keyboard.clear())
 
         })

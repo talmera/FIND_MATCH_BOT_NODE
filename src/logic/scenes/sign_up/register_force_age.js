@@ -21,7 +21,7 @@ class Register_Force_Age extends Scene {
         })
         this.leave((ctx) => {
           console.log('register_force_age.js: leaving age')
-          ctx.session.age =  this.selected_age.toString()
+          ctx.session.user.age =  this.selected_age.toString()
           ctx.reply(AGE_SAVED)
         })
         this.on('message', (ctx) => {

@@ -16,15 +16,13 @@ class Starter extends Scene {
         this.keyboard = new Keyboard(options);
         this.database = database;
         this.init_functions();
-
-
         
 
     }
     async init_functions(){
         this.enter((ctx) => {
           console.log("start.js: entered start scene")
-          this.database.user_exist_by_tg_id(ctx.message.from.id.toString())
+          this.database.user_exist_by_tg_id(ctx.message.from.id.toString()) // SLOW_DOWN ?
           .then(user_exist => {
             console.log("start.js: user exists ? : "+user_exist)
             if (user_exist) {
@@ -64,3 +62,4 @@ class Starter extends Scene {
 
 
 exports.Starter = Starter;
+//change
