@@ -3,45 +3,51 @@ const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
 
+const COMPLETE_REGISTERATION_BTN_TEXT = "تکمیل ثبت نام"
+const WELCOME_TO_MAINMANU_MESSAGE = "به منو اصلی خوش آمدید"
 
 class Base_Menu extends Scene {
-    constructor(database) {
-        super("base_menu")
+  constructor(database) {
+    super("base_menu")
 
-        this.database = database
-        this.init_functions()
+    this.database = database
+    const options = {
+      inline: false, // default
+      duplicates: false, // default
+      newline: false, // default
     }
-    async init_functions(){
-        this.enter((ctx) => {
+    this.keyboard = new Keyboard(options)
+    this.keyboard
+      .add(COMPLETE_REGISTERATION_BTN_TEXT)
+      .add('DebugUsersQuery')
 
-            const options = {
-                inline: false, // default
-                duplicates: false, // default
-                newline: false, // default
-              }
-              const keyboard = new Keyboard(options)
-              keyboard
-                .add('DebugUsersQuery') // first line
-
-            ctx.reply("welcome to menu",keyboard.draw())
-        })
-        this.leave((ctx) => {
-          keyboar.remove('DebugUsersQuery')
-          ctx.reply('good byeeee')
-        })
-        this.hears(/\/cancel/gi, () => {
-          this.leave()
-        })
-        this.hears(/DebugUsersQuery/gi, (ctx) => {
-          const user = this.database['User'].findAll()
-          .then((users) => {
-              ctx.reply(JSON.stringify(users, null, 4))
-          })
-        })
-        this.on('message', (ctx) => {
-            ctx.reply('for exit enter /cancel',keyboard.draw())
+    this.init_functions()
+  }
+  async init_functions() {
+    this.enter((ctx) => {
+      ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())
     })
-    }
+    this.leave((ctx) => {
+      this.keyboard.remove('DebugUsersQuery')
+      ctx.reply('good byeeee')
+    })
+    this.command("cancel", () => {
+      this.leave()
+    })
+    this.hears(/DebugUsersQuery/gi, (ctx) => {
+      ctx.session.user = this.database['User'].findAll()
+        .then((users) => {
+          ctx.reply(JSON.stringify(users, null, 4))
+        })
+    })
+    this.hears(new RegExp(COMPLETE_REGISTERATION_BTN_TEXT , "i"), (ctx) => {
+      ctx.scene.enter('register_prompt_bio')
+    })
+    this.on('message', (ctx) => {
+      ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())
+    })
+    
+  }
 
 
 }

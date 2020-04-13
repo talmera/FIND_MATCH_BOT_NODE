@@ -35,13 +35,15 @@ class Register_Force_Province extends Scene {
         this.leave((ctx) => {
           console.log('register_force_province.js: leaving province')
 
-          ctx.session.user.province =  this.selected_province.toString()
-          ctx.reply(PROVINCE_SAVED, this.keyboard.clear())
-
+        })
+        this.command("cancel", () => {
+          this.leave()
         })
         this.on('message', (ctx) => {
           if ( PROVINCES.includes(ctx.message.text)) {
             this.selected_province = ctx.message.text
+            ctx.session.user.province =  this.selected_province.toString()
+            ctx.reply(PROVINCE_SAVED, this.keyboard.clear())
             ctx.scene.enter('register_force_name')
           }
           else{

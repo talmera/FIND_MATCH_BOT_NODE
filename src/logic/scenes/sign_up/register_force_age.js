@@ -21,14 +21,18 @@ class Register_Force_Age extends Scene {
         })
         this.leave((ctx) => {
           console.log('register_force_age.js: leaving age')
-          ctx.session.user.age =  this.selected_age.toString()
-          ctx.reply(AGE_SAVED)
+
+        })
+        this.command("cancel", () => {
+          this.leave()
         })
         this.on('message', (ctx) => {
           var inp = parseInt(ctx.message.text)
           if (ctx.message.text == inp && inp < 100 && inp > 0){
             // some body entered some int
             this.selected_age = inp
+            ctx.session.user.age =  this.selected_age.toString()
+            ctx.reply(AGE_SAVED)
             ctx.scene.enter('register_force_province')
           }else{
             ctx.reply(FALSE_INPUT_MESSAGE)

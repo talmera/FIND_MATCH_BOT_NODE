@@ -8,7 +8,6 @@ const ASK_FOR_CANCEL = 'for exit enter /cancel'
 class Register_Force_Gender extends Scene {
     constructor(database) {
         super("register_force_gender")
-        // this.keyboard = null
         this.database = database
 
         const options = {
@@ -18,7 +17,6 @@ class Register_Force_Gender extends Scene {
         }
         this.keyboard = new Keyboard(options)
         this.init_functions()
-        this.selected_gender = null
 
     }
     async init_functions(){
@@ -33,25 +31,25 @@ class Register_Force_Gender extends Scene {
         this.leave((ctx) => {
           console.log('register_force_gender.js: exiting gender')
 
-          ctx.session.user.sex = this.selected_gender.toString()
-          ctx.reply(GENDER_SAVED_MESSAGE,this.keyboard.clear())
+          
         })
-        this.hears(/boy/gi, (ctx) => {
-          this.selected_gender = 'boy'
-      
+        this.hears(/^(boy|girl|other)$/gi, (ctx) => {
+          this.selected_gender = ctx.message.text;
+          this.save_gender()
           ctx.scene.enter('register_force_age')
         })
-        this.hears(/girl/gi, (ctx) => {
-          this.selected_gender = 'girl'
-          ctx.scene.enter('register_force_age')
+        this.command("cancel", () => {
+          this.leave()
         })
-        this.hears(/other/gi, (ctx) => {
-          this.selected_gender = 'other'
-          ctx.scene.enter('register_force_age')
-        })
-        this.on('message', (ctx) => {
+        
+        this.on('message', (ctx,next) => {
             ctx.reply(ASK_FOR_CANCEL)
+           
         })
+    }
+    async save_gender(){
+      ctx.session.user.sex = this.selected_gender.toString()
+      ctx.reply(GENDER_SAVED_MESSAGE,this.keyboard.clear())
     }
 }
 

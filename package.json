@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/talmera/FIND_MATCH_BOT_NODE#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.2",
     "pg": "^7.18.2",
