@@ -19,8 +19,9 @@ class Register_Prompt_Bio extends Scene {
     this.init_functions()
   }
   async init_functions() {
-    console.log('register_prompt_bio.js: entering bio')
+    
     this.enter((ctx) => {
+      console.log('register_prompt_bio.js: entering bio')
       this.keyboard
         .add(IGNORE) // first line
 
@@ -35,7 +36,12 @@ class Register_Prompt_Bio extends Scene {
     })
 
     this.hears(IGNORE, (ctx) => {
-      ctx.scene.enter('register_prompt_pic')
+      this.database.user_by_tg_id(ctx.message.from.id.toString()).then(user => {
+        ctx.session.user = user
+        ctx.scene.enter('register_prompt_pic')
+      })
+
+
     })
     this.on('message', (ctx) => {
       const bio = ctx.message.text

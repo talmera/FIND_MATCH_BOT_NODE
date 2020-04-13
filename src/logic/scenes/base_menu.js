@@ -17,19 +17,34 @@ class Base_Menu extends Scene {
       newline: false, // default
     }
     this.keyboard = new Keyboard(options)
-    this.keyboard
-      .add(COMPLETE_REGISTERATION_BTN_TEXT)
-      .add('DebugUsersQuery')
+
 
     this.init_functions()
   }
   async init_functions() {
     this.enter((ctx) => {
-      ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())
+      
+      this.database.user_by_tg_id(ctx.message.from.id.toString()).then(user => {
+        ctx.session.user = user
+        if (user.rank == "profile") {
+          this.keyboard
+            .add("یوزر کاملی آفرین بزودی میتونی فیل هوا کنی")
+            .add('DebugUsersQuery')
+        } else if (user.rank == "primary") {
+          this.keyboard
+            .add(COMPLETE_REGISTERATION_BTN_TEXT)
+            .add('DebugUsersQuery')
+        }
+        ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())
+      }).catch((err) => {
+
+        ctx.reply("base_menu.js: system ride" + err.stack)
+
+      })
+
     })
     this.leave((ctx) => {
-      this.keyboard.remove('DebugUsersQuery')
-      ctx.reply('good byeeee')
+      // this.keyboard.remove('DebugUsersQuery')
     })
     this.command("cancel", () => {
       this.leave()
@@ -40,13 +55,13 @@ class Base_Menu extends Scene {
           ctx.reply(JSON.stringify(users, null, 4))
         })
     })
-    this.hears(new RegExp(COMPLETE_REGISTERATION_BTN_TEXT , "i"), (ctx) => {
+    this.hears(new RegExp(COMPLETE_REGISTERATION_BTN_TEXT, "i"), (ctx) => {
       ctx.scene.enter('register_prompt_bio')
     })
     this.on('message', (ctx) => {
       ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())
     })
-    
+
   }
 
 

@@ -12,6 +12,8 @@ const { Register_Force_Province } = require("./scenes/sign_up/register_force_pro
 const { Register_Force_Name } = require("./scenes/sign_up/register_force_name.js")
 const { Register_Prompt_Bio } = require("./scenes/sign_up/register_prompt_bio.js")
 const { Register_Prompt_Pic } = require("./scenes/sign_up/register_prompt_pic.js")
+const { Register_Prompt_Moral } = require("./scenes/sign_up/register_prompt_moral.js")
+const { Register_Prompt_Email } = require("./scenes/sign_up/register_prompt_email.js")
 const { Base_Menu } = require("./scenes/base_menu.js")
 
 const Database = require("./../database/models/index.js")
@@ -44,6 +46,8 @@ class Bot {
         stage.register(new Register_Force_Name(this.database))
         stage.register(new Register_Prompt_Bio(this.database))
         stage.register(new Register_Prompt_Pic(this.database))
+        stage.register(new Register_Prompt_Moral(this.database))
+        stage.register(new Register_Prompt_Email(this.database))
         stage.register(new Base_Menu(this.database))
         // stage.command('cancel',
         //     () => {
