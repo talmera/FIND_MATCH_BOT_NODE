@@ -5,6 +5,7 @@ const { leave } = Stage
 
 const COMPLETE_REGISTERATION_BTN_TEXT = "تکمیل ثبت نام"
 const WELCOME_TO_MAINMANU_MESSAGE = "به منو اصلی خوش آمدید"
+const START_REAL_TIME_CHAT = 'چت با ملت'
 
 class Base_Menu extends Scene {
   constructor(database) {
@@ -23,8 +24,9 @@ class Base_Menu extends Scene {
   }
   async init_functions() {
     this.enter((ctx) => {
-      
-      this.database.user_by_tg_id(ctx.message.from.id.toString()).then(user => {
+
+      this.database.user_by_tg_id(ctx.message.from.id.toString())
+      .then((user) => {
         ctx.session.user = user
         if (user.rank == "profile") {
           this.keyboard
@@ -34,6 +36,7 @@ class Base_Menu extends Scene {
           this.keyboard
             .add(COMPLETE_REGISTERATION_BTN_TEXT)
             .add('DebugUsersQuery')
+            .add(START_REAL_TIME_CHAT)
         }
         ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())
       }).catch((err) => {
@@ -57,6 +60,9 @@ class Base_Menu extends Scene {
     })
     this.hears(new RegExp(COMPLETE_REGISTERATION_BTN_TEXT, "i"), (ctx) => {
       ctx.scene.enter('register_prompt_bio')
+    })
+    this.hears(START_REAL_TIME_CHAT, (ctx) => {
+      ctx.scene.enter('chat_request')
     })
     this.on('message', (ctx) => {
       ctx.reply(WELCOME_TO_MAINMANU_MESSAGE, this.keyboard.draw())

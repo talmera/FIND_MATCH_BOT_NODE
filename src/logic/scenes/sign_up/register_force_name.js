@@ -26,12 +26,15 @@ class Register_Force_Name extends Scene {
 
         this.on('message', (ctx) => {
             // TODO: use regex to contorl names
+            // this line makes server slow
+            ctx.session.user.save()
+            .then(() => {
+              ctx.scene.enter('base_menu')
+            })
             this.selected_name = ctx.message.text
-            ctx.scene.enter('base_menu')
             ctx.session.user.profile_name = this.selected_name.toString()
-            ctx.session.user.save()// this line makes server slow
             ctx.reply(REGISTER_DONE_MESSAGE)
-            
+
         })
     }
 

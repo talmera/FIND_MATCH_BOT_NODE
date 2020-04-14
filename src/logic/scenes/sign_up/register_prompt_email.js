@@ -19,7 +19,7 @@ class Register_Prompt_Email extends Scene {
         this.init_functions()
     }
     async init_functions() {
-        
+
         this.enter((ctx) => {
             console.log('register_prompt_email.js: entering email')
             // this.keyboard
@@ -31,7 +31,7 @@ class Register_Prompt_Email extends Scene {
             console.log('register_prompt_email.js:  leaving email')
 
         })
-        this.command("cancel", () => {
+        this.command("cancel", (ctx) => {
             ctx.scene.enter('base_menu')
         })
 

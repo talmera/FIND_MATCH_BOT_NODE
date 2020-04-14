@@ -16,15 +16,15 @@ class Starter extends Scene {
         this.keyboard = new Keyboard(options);
         this.database = database;
         this.init_functions();
-        
+
 
     }
     async init_functions(){
         this.enter((ctx) => {
           console.log("start.js: entered start scene")
           this.database.user_by_tg_id(ctx.message.from.id.toString()) // SLOW_DOWN ?
-          .then(user_exist => {
-            console.log("start.js: user exists ? : "+user_exist)
+          .then((user_exist) => {
+            // console.log("start.js: user exists ? : "+user_exist)
             if (user_exist) {
               ctx.scene.enter('base_menu')
             } else {
@@ -36,7 +36,7 @@ class Starter extends Scene {
           })
         })
         this.leave((ctx) => {
-            
+
             console.log("start.js: leaving start scene")
         })
         this.hears(REGISTER_BUTTON,(ctx) => {

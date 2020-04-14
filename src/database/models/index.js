@@ -65,9 +65,6 @@ db.user_by_tg_id = (id) => {
     tg_id: id
   }
   })
-  // .then(token => {
-  //   return token !== null
-  // })
 }
 
 

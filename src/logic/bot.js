@@ -16,6 +16,9 @@ const { Register_Prompt_Moral } = require("./scenes/sign_up/register_prompt_mora
 const { Register_Prompt_Email } = require("./scenes/sign_up/register_prompt_email.js")
 const { Base_Menu } = require("./scenes/base_menu.js")
 
+const { Chat_Request } = require("./scenes/real_time_chat/chat_request.js")
+const { Opened_Chat } = require("./scenes/real_time_chat/opened_chat.js")
+global.globals = require("./Global.js")
 const Database = require("./../database/models/index.js")
 // console.log('bot.js is db: '+Database)
 // console.log(db)
@@ -49,11 +52,14 @@ class Bot {
         stage.register(new Register_Prompt_Moral(this.database))
         stage.register(new Register_Prompt_Email(this.database))
         stage.register(new Base_Menu(this.database))
+        stage.register(new Chat_Request(this.database))
+        stage.register(new Opened_Chat(this.database))
+
         // stage.command('cancel',
         //     () => {
-        //         console.log("bot.js inside cancel stage");  
+        //         console.log("bot.js inside cancel stage");
         //         leave()
-               
+
         //     }
         // )
         this.bot.command('start', (ctx) => ctx.scene.enter('starter'))
