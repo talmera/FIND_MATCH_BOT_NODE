@@ -25,7 +25,7 @@ class Starter extends Scene {
           this.database.user_by_tg_id(ctx.message.from.id.toString()) // SLOW_DOWN ?
           .then(user_exist => {
             console.log("start.js: user exists ? : "+user_exist)
-            if (user_exist) {
+            if (user_exist != null) {
               ctx.scene.enter('base_menu')
             } else {
 
