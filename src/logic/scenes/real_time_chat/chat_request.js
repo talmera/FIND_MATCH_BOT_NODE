@@ -3,7 +3,10 @@ const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 
 const EventEmitter = require('events');
-class MyEmitter extends EventEmitter {}
+class MyEmitter extends EventEmitter {
+
+}
+
 
 const { leave } = Stage
 const IGNORE = 'نمیخواد'
@@ -39,6 +42,9 @@ class Chat_Request extends Scene {
           started_chat.on('message', (msg) =>{
             ctx.reply(msg)
           })
+          // started_chat.on('terminate', () => {
+          //   delete(started_chat)
+          // })
           console.log('i have this user: ', user)
           console.log('and emiter is ', wait_requests[user])
           wait_requests[user].emit('connect', started_chat)
@@ -52,21 +58,24 @@ class Chat_Request extends Scene {
         const listen_from_lobby = new MyEmitter()
         listen_from_lobby.once('connect', (chat_pointer) => {
           // save user id and go to start chat with that user
+          delete(globals.online_list[ctx.session.user.tg_id])
           ctx.session.chat_counter_party = chat_pointer
           listen_from_lobby.on('message', msg => {
             ctx.reply(msg)
           })
-          delete(globals.online_list[ctx.message.from.id.toString()])
+          // listen_from_lobby.on('terminate', () => {
+          //   delte(listen_from_lobby)
+          // })
           ctx.scene.enter('opened_chat')
         })
         // add him to globals
-        globals.online_list[ctx.message.from.id.toString()] = listen_from_lobby
+        globals.online_list[ctx.session.user.tg_id] = listen_from_lobby
       }
       console.log('globals are: ' , globals.online_list)
     })
     this.leave((ctx) => {
       console.log('chat_request.js:  leaving chat')
-      delete(globals.online_list[ctx.message.from.id.toString()])
+      // delete(globals.online_list[ctx.session.user.tg_id])
 
     })
     this.command("cancel", () => {

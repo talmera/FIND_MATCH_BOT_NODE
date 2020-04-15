@@ -24,6 +24,8 @@ class Opened_Chat extends Scene {
 
     })
     this.command("cancel", () => {
+      ctx.session.chat_counter_party.emit('message', 'your party has lefted chat')
+      delete(ctx.session.chat_counter_party)
       this.leave()
     })
 
