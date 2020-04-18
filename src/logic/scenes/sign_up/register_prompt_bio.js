@@ -51,6 +51,7 @@ class Register_Prompt_Bio extends Scene {
         ctx.session.user.bio = bio.toString()
         const PROFILE_BIO_MESSAGE = ` بیو ${bio} برای شما ثبت شد`
         ctx.reply(PROFILE_BIO_MESSAGE)
+        ctx.scene.enter('register_prompt_pic')
       })
 
 

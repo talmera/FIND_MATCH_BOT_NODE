@@ -24,7 +24,7 @@ class Base_Menu extends Scene {
   }
   async init_functions() {
     this.enter((ctx) => {
-
+      console.log("base_menu.js: entered base menu")
       this.database.user_by_tg_id(ctx.message.from.id.toString())
       .then((user) => {
         ctx.session.user = user
@@ -32,6 +32,7 @@ class Base_Menu extends Scene {
           this.keyboard
             .add("یوزر کاملی آفرین بزودی میتونی فیل هوا کنی")
             .add('DebugUsersQuery')
+            .add(START_REAL_TIME_CHAT)
         } else if (user.rank == "primary") {
           this.keyboard
             .add(COMPLETE_REGISTERATION_BTN_TEXT)
@@ -48,6 +49,7 @@ class Base_Menu extends Scene {
     })
     this.leave((ctx) => {
       // this.keyboard.remove('DebugUsersQuery')
+      console.log("base_menu.js: leaving base menu")
     })
     this.command("cancel", () => {
       this.leave()

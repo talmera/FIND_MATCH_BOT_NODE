@@ -35,8 +35,10 @@ class Register_Force_Gender extends Scene {
         })
         this.hears(/^(boy|girl|other)$/gi, (ctx) => {
           this.selected_gender = ctx.message.text;
-          this.save_gender()
-          ctx.scene.enter('register_force_age')
+          this.save_gender(ctx).then(()=>{
+            ctx.scene.enter('register_force_age')
+          })
+          
         })
         this.command("cancel", () => {
           this.leave()
@@ -47,7 +49,7 @@ class Register_Force_Gender extends Scene {
            
         })
     }
-    async save_gender(){
+    async save_gender(ctx){
       ctx.session.user.sex = this.selected_gender.toString()
       ctx.reply(GENDER_SAVED_MESSAGE,this.keyboard.clear())
     }

@@ -43,6 +43,7 @@ class Register_Prompt_Moral extends Scene {
             ctx.session.user.moral = moral.toString()
             const PROFILE_MORAL_MESSAGE = ` اخلاق ${moral} برای شما ثبت شد`
             ctx.reply(PROFILE_MORAL_MESSAGE)
+            ctx.scene.enter('register_prompt_email')
         })
 
 
