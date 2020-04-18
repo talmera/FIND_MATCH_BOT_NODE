@@ -18,12 +18,12 @@ class Chat_Request extends Scene {
     super("chat_request")
 
     this.database = database
-    // const options = {
-    //   inline: false, // default
-    //   duplicates: false, // default
-    //   newline: false // default
-    // }
-    // this.keyboard = new Keyboard(options)
+    const options = {
+      inline: false, // default
+      duplicates: false, // default
+      newline: false // default
+    }
+    this.keyboard = new Keyboard(options)
     this.init_functions()
   }
   async init_functions() {
@@ -37,10 +37,10 @@ class Chat_Request extends Scene {
         for (var user in wait_requests){
           // // TODO: check if user matches
           ctx.session.chat_counter_party = wait_requests[user]
-          ctx.reply('entering chat with user: ' + user)
+          ctx.reply('entering chat with user: ' + user , this.Keyboard.clear())
           const started_chat = new MyEmitter()
           started_chat.on('message', (msg) =>{
-            ctx.reply(msg)
+            ctx.reply(msg,this.Keyboard.clear())
           })
           // started_chat.on('terminate', () => {
           //   delete(started_chat)
@@ -53,7 +53,7 @@ class Chat_Request extends Scene {
         }
       }
       else {
-        ctx.reply('lobby is empty please wait')
+        ctx.reply('lobby is empty please wait',this.keyboard.clear())
         // make a event
         const listen_from_lobby = new MyEmitter()
         listen_from_lobby.once('connect', (chat_pointer) => {
@@ -74,6 +74,7 @@ class Chat_Request extends Scene {
       console.log('globals are: ' , globals.online_list)
     })
     this.leave((ctx) => {
+      delete(globals.online_list[ctx.session.user.tg_id])
       console.log('chat_request.js:  leaving chat')
       // delete(globals.online_list[ctx.session.user.tg_id])
 
@@ -82,8 +83,9 @@ class Chat_Request extends Scene {
       this.leave()
     })
 
-    // this.on('message', (ctx) => {
-    // })
+    this.on('message', (ctx) => {
+      ctx.reply("کسشر نفرس گوه",this.keyboard.clear())
+    })
   }
 
 

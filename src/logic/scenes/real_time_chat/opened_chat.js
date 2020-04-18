@@ -23,7 +23,7 @@ class Opened_Chat extends Scene {
       console.log('opened_chat.js:  leaving chat')
 
     })
-    this.command("cancel", () => {
+    this.command("cancel", (ctx) => {
       ctx.session.chat_counter_party.emit('message', 'your party has lefted chat')
       delete(ctx.session.chat_counter_party)
       this.leave()

@@ -61,9 +61,11 @@ class Base_Menu extends Scene {
         })
     })
     this.hears(new RegExp(COMPLETE_REGISTERATION_BTN_TEXT, "i"), (ctx) => {
+      
       ctx.scene.enter('register_prompt_bio')
     })
     this.hears(START_REAL_TIME_CHAT, (ctx) => {
+      
       ctx.scene.enter('chat_request')
     })
     this.on('message', (ctx) => {
