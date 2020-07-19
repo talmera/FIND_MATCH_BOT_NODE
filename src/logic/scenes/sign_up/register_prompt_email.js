@@ -1,4 +1,3 @@
-const Keyboard = require('telegraf-keyboard')
 const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
@@ -9,12 +8,7 @@ class Register_Prompt_Email extends Scene {
         super("register_prompt_email")
 
         this.database = database
-        // const options = {
-        //     inline: false, // default
-        //     duplicates: false, // default
-        //     newline: false // default
-        // }
-        // this.keyboard = new Keyboard(options)
+
         this.email_regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "i")
         this.init_functions()
     }
@@ -22,8 +16,7 @@ class Register_Prompt_Email extends Scene {
 
         this.enter((ctx) => {
             console.log('register_prompt_email.js: entering email')
-            // this.keyboard
-            //     .add(IGNORE) // first line
+
 
             ctx.reply(PROMPT_EMAIL_MESSAGE)
         })

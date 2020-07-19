@@ -1,4 +1,3 @@
-// const Keyboard = require('telegraf-keyboard')
 const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 const { leave } = Stage

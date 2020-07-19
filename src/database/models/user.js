@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     tg_id: DataTypes.STRING,
     chat_id: DataTypes.STRING,
     province: DataTypes.STRING,
+    random_anonymous_id: DataTypes.STRING,
     city: DataTypes.CHAR(40),
     age: DataTypes.CHAR(4),
     bio: DataTypes.TEXT,

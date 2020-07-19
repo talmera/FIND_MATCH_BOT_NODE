@@ -1,4 +1,3 @@
-const Keyboard = require('telegraf-keyboard')
 const Stage = require('telegraf/stage')
 const Scene = require('telegraf/scenes/base')
 const { leave } = Stage
@@ -10,12 +9,6 @@ class Register_Prompt_Moral extends Scene {
         super("register_prompt_moral")
 
         this.database = database
-        const options = {
-            inline: false, // default
-            duplicates: false, // default
-            newline: false // default
-        }
-        this.keyboard = new Keyboard(options)
         this.init_functions()
     }
     async init_functions() {
